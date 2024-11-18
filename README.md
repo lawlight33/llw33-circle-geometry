@@ -21,7 +21,7 @@ Future updates may include additional functionalities such as:
 ### Installation
 ```bash
 git clone https://github.com/lawlight33/llw33-circle-geometry.git
-cd circle-geometry-checker
+cd llw33-circle-geometry
 javac -d bin Main.java
 java -cp bin Main
 ```

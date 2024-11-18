@@ -2,7 +2,7 @@
 
 This Java project provides an utility to compute geometry for circles. Currently, the following feature is supported:
 
-- **isCenterInsideTargetCircle** Determines if the center of one circle lies within the area of another circle.
+- `isCenterInsideTargetCircle` determines if the center of one circle lies within the area of another circle.
 
 ## Future ideas
 

@@ -20,7 +20,7 @@ Future updates may include additional functionalities such as:
 
 ### Installation
 ```bash
-git clone https://github.com/your-username/circle-geometry-checker.git
+git clone https://github.com/lawlight33/llw33-circle-geometry.git
 cd circle-geometry-checker
 javac -d bin Main.java
 java -cp bin Main

@@ -24,8 +24,8 @@ public class Main {
             }
             int dx = getX(source) - getX(inTarget);
             int dy = getY(source) - getY(inTarget);
-            int distanceSquared = dx * dx + dy * dy;
-            return getRadius(inTarget) * getRadius(inTarget) >= distanceSquared;
+            int distanceSquared = Math.addExact(Math.multiplyExact(dx, dx), Math.multiplyExact(dy, dy));
+            return Math.multiplyExact(getRadius(inTarget), getRadius(inTarget)) >= distanceSquared;
         }
 
         private static int getX(int[] arr) {
@@ -42,26 +42,47 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int[] arr1 = {2, 1, 3};
-        int[] arr2 = {6, 1, 4};
-
+        int[] arr1 = new int[] {2, 1, 3};
+        int[] arr2 = new int[] {6, 1, 4};
         test(arr2, arr1, false);
         test(arr1, arr2, true);
 
         additionalTestCases();
 
+        arr1 = new int[] {100000, 100000, 1};
+        arr2 = new int[] {1, 1, 100000};
+        test(arr2, arr1, false, true);
+        test(arr1, arr2, false, true);
+
         System.out.println("success.");
     }
 
     private static void test(int[] source, int[] inTarget, boolean expected) {
-        boolean actual = CircleGeometry.isCenterInsideTargetCircle(source, inTarget);
-        if (expected != actual) {
-            throw new AssertionError(
-                    "[ERROR] source: %s, inTarget: %s, expected: %b, actual: %b".formatted(
-                            Arrays.toString(source), Arrays.toString(inTarget),
-                            expected, actual
-                    )
-            );
+        test(source, inTarget, expected, false);
+    }
+
+    private static void test(int[] source, int[] inTarget, boolean expected, boolean overflow) {
+        try {
+            boolean actual = CircleGeometry.isCenterInsideTargetCircle(source, inTarget);
+            if (overflow) {
+                throw new AssertionError(
+                        "[ERROR] source: %s, inTarget: %s, no overflow detected".formatted(
+                                Arrays.toString(source), Arrays.toString(inTarget)
+                        )
+                );
+            }
+            if (expected != actual) {
+                throw new AssertionError(
+                        "[ERROR] source: %s, inTarget: %s, expected: %b, actual: %b".formatted(
+                                Arrays.toString(source), Arrays.toString(inTarget),
+                                expected, actual
+                        )
+                );
+            }
+        } catch (ArithmeticException ex) {
+            if (!overflow) {
+                throw ex;
+            }
         }
     }
 
